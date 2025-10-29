@@ -32,7 +32,7 @@ public class AuthSession
         return repo.Read(name);
     }
 
-    public void Register(string name, string password, string confirmPassword)
+    public void Register(string name, string password, string confirmPassword, Role role)
     {
         if (repo.HasUser(name))
         {
@@ -42,7 +42,7 @@ public class AuthSession
         {
             if (password == confirmPassword)
             {
-                repo.Create(name, password);
+                repo.Create(name, password, role);
             }
             else
             {

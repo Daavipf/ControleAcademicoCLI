@@ -22,7 +22,7 @@ public class AuthTest
     public void TestRegister()
     {
         Assert.False(repo.HasUser("davi"));
-        session.Register("davi", "123", "123");
+        session.Register("davi", "123", "123", Role.Student);
         Assert.True(repo.HasUser("davi"));
     }
 
@@ -30,7 +30,7 @@ public class AuthTest
     public void TestRegisterAndLogin()
     {
         Assert.False(repo.HasUser("davi"));
-        session.Register("davi", "123", "123");
+        session.Register("davi", "123", "123", Role.Student);
         Assert.True(repo.HasUser("davi"));
         session.Login("davi", "123");
         Assert.True(session.HasActiveUser);
@@ -40,15 +40,15 @@ public class AuthTest
     [Fact]
     public void TestRegisterAlreadyExistingUser()
     {
-        session.Register("davi", "123", "123");
-        var ex = Assert.Throws<InvalidOperationException>(() => session.Register("davi", "123", "123"));
+        session.Register("davi", "123", "123", Role.Student);
+        var ex = Assert.Throws<InvalidOperationException>(() => session.Register("davi", "123", "123", Role.Student));
         Assert.Equal("Usuário já cadastrado", ex.Message);
     }
 
     [Fact]
     public void TestLogout()
     {
-        session.Register("davi", "123", "123");
+        session.Register("davi", "123", "123", Role.Student);
         session.Login("davi", "123");
         session.Logout();
         Assert.False(session.HasActiveUser);
